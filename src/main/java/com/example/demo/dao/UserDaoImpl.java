@@ -15,7 +15,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> allUsers() {
-        return entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
+        return entityManager.createQuery("SELECT DISTINCT user FROM User user join fetch user.roles", User.class).getResultList();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserByName(String name) {
         return entityManager.createQuery(
-                        "SELECT user FROM User user WHERE user.name =:name", User.class)
+                        "SELECT user FROM User user join fetch  user.roles WHERE user.name =:name", User.class)
                 .setParameter("name", name)
                 .getSingleResult();
     }
