@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<!--<html lang="en">-->
 <head>
     <meta charset="UTF-8">
     <title>ALL USERS</title>
@@ -8,32 +7,32 @@
 <body>
 <h1>USERS LIST</h1>
 <br>
-
 <table border="1">
     <tr>
-        <th>ID</th>
-        <th>NAME</th>
-        <th>LASTNAME</th>
-        <th>LOGIN</th>
-        <th>ROLE</th>
-        <th>ACTION</th>
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Edit</th>
+        <th>Delete</th>
     </tr>
-
     <tr th:each="user : ${usersList}">
         <td th:text="${user.getId()}">id</td>
         <td th:text="${user.getName()}">name</td>
         <td th:text="${user.getLastname()}">lastname</td>
-        <td th:text="${user.getLogin()}">login</td>
+        <td th:text="${user.getAge()}">login</td>
+        <td th:text="${user.getEmail()}">login</td>
         <td>
             <div th:each="role : ${user.getRoles()}">
                 <p th:text="${role.getRole()}"></p>
             </div>
         <td>
-            <a th:href="@{/admin/edit/{id}(id=${user.getId()})}">EDIT </a>
-            <br>
-            <br>
-            <a th:href="@{/admin/delete/{id}(id=${user.getId()})}">DELETE </a>
+            <a th:href="@{/admin/edit/{id}(id=${user.getId()})}">EDIT </a></td>
 
+        <td>
+            <a th:href="@{/admin/delete/{id}(id=${user.getId()})}">DELETE </a>
         </td>
     </tr>
 
