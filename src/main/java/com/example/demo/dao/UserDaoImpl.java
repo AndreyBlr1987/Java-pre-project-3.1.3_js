@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void add(User user) {
+    public void create(User user) {
         entityManager.persist(user);
     }
 
@@ -40,10 +40,28 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserByName(String name) {
+    public User getUserByEmail(String email) {
         return entityManager.createQuery(
-                        "SELECT user FROM User user join fetch  user.roles WHERE user.name =:name", User.class)
-                .setParameter("name", name)
+                        "SELECT user FROM User user join fetch  user.roles WHERE user.email =:email", User.class)
+                .setParameter("email", email)
                 .getSingleResult();
+    }
+
+    @Override
+    public User getUserById(int id) {
+
+        return entityManager.find(User.class, id);
+    }
+
+    @Override
+    public void updateUser(int id, User updatedUser) {
+        User user = getUserById(id);
+        user.setName(updatedUser.getName());
+        user.setLastname(updatedUser.getLastname());
+        user.setAge(updatedUser.getAge());
+        if (updatedUser.getPassword() != "")
+            user.setPassword(updatedUser.getPassword());
+        user.setRoles(updatedUser.getRoles());
+        entityManager.merge(user);
     }
 }

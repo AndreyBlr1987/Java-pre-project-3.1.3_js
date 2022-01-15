@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .addFilterBefore(filter, CsrfFilter.class)
                 .formLogin()
-                .permitAll()
+                .loginPage("/login")
                 .successHandler(loginSuccessHandler)
                 .permitAll();
         http

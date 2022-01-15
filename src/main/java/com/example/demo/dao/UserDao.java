@@ -9,14 +9,17 @@ public interface UserDao {
 
     List<User> allUsers();
 
-    void add(User user);
-
     void delete(User user);
 
     void edit(User user);
 
     User getById(int id);
 
-    User getUserByName(String name);
+    User getUserByEmail(String email);
 
+    User getUserById(int id);
+
+    void updateUser(int id, User updatedUser);
+
+    void create(User user);
 }
