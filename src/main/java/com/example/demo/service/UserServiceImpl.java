@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dao.UserDao;
 import com.example.demo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,45 +14,57 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    @Transactional
     public List<User> allUsers() {
         return userDao.allUsers();
     }
 
+
     @Override
-    @Transactional
-    public void add(User user) {
-        userDao.add(user);
+    public void create(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userDao.create(user);
     }
 
     @Override
-    @Transactional
     public void delete(User user) {
         userDao.delete(user);
     }
 
     @Override
-    @Transactional
     public void edit(User user) {
         userDao.edit(user);
     }
 
     @Override
-    @Transactional
     public User getById(int id) {
         return userDao.getById(id);
     }
 
     @Override
-    public User getUserByName(String name) {
-        return userDao.getUserByName(name);
+    public User getUserByEmail(String email) {
+        return userDao.getUserByEmail(email);
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return userDao.getUserById(id);
+    }
+
+
+    @Override
+    public void updateUser(int id, User updatedUser) {
+        if (updatedUser.getPassword() != "")
+            updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        userDao.updateUser(id, updatedUser);
     }
 }
 

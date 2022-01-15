@@ -4,10 +4,13 @@ import com.example.demo.entity.User;
 import com.example.demo.service.RoleService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,42 +33,26 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String allUsers(Model model) {
-        List<User> users = userService.allUsers();
-        model.addAttribute("usersList", users);
+    public String allUsers(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("user", user);
+        model.addAttribute("users", userService.allUsers());
+        model.addAttribute("roles", roleService.getAllRoles());
         return "users";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editPage(@PathVariable("id") int id, Model model) {
-        model.addAttribute("roles", roleService.getAllRoles());
-        model.addAttribute("user", userService.getById(id));
-
-        return "editPage";
-    }
-
-    @PostMapping("/edit")
-    public String editUser(@ModelAttribute User user,
-                           @RequestParam("roles") String[] role) {
-        user.setRoles(roleService.getSetOfRoles(role));
-        userService.edit(user);
+    @PostMapping
+    public String create(@ModelAttribute("user") User user,
+                         @RequestParam(value = "nameRoles") String[] nameRoles) {
+        user.setRoles(roleService.getSetOfRoles(nameRoles));
+        userService.create(user);
         return "redirect:/admin";
     }
 
-    @GetMapping(value = "/add")
-    public String addPage(Model model) {
-        User user = new User();
+    @GetMapping("/new")
+    public String newUser(Model model) {
         model.addAttribute("roles", roleService.getAllRoles());
-        model.addAttribute("user",user);
+        model.addAttribute("user", new User());
         return "new";
-    }
-
-    @PostMapping(value = "/add")
-    public String addUser(@ModelAttribute User user,
-                          @RequestParam(value = "roles") String [] roles) {
-        user.setRoles(roleService.getSetOfRoles(roles));
-        userService.add(user);
-        return "redirect:/admin";
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -74,6 +61,20 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @GetMapping("/{id}")
+    public String editUser(Model model, @PathVariable("id") int id) {
+        model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("user", userService.getUserById(id));
+        return "edit";
+    }
 
+    @PatchMapping("/{id}")
+    public String updateUser(@ModelAttribute("user") User user,
+                             @RequestParam(value = "nameRoles") String[] nameRoles,
+                             @PathVariable(value = "id") int id) {
+        user.setRoles(roleService.getSetOfRoles(nameRoles));
+        userService.updateUser(id, user);
+        return "redirect:/admin";
+    }
 }
 
