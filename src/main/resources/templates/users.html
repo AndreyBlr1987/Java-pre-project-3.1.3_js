@@ -10,7 +10,7 @@
 <body>
 <nav class="navbar navbar-dark bg-dark">
     <span>
-        <span class="navbar-brand font-weight-bold" th:text="${user.email}"></span>
+        <span class="navbar-brand font-weight-bold" th:text="${user.getEmail()}"></span>
         <span class="navbar-brand" th:text="' with roles:'"></span>
         <span class="navbar-brand" th:each="role : ${user.getRoles()}"
               th:text="${role.getRole()} + ' '"></span>
@@ -98,7 +98,7 @@
                                                                     <input type="number"
                                                                            class="form-control form-control-sm"
                                                                            th:value="*{id}"
-                                                                           id="id"
+                                                                           id="EditiId"
                                                                            readonly>
                                                                 </label>
                                                                 <br>
@@ -106,14 +106,14 @@
                                                                     <input type="text"
                                                                            class="form-control form-control-sm"
                                                                            th:value="*{name}"
-                                                                           id="name" name="name">
+                                                                           id="EditName" name="EditName">
                                                                 </label>
                                                                 <br>
                                                                 <label>Last name
                                                                     <input type="text"
                                                                            class="form-control form-control-sm"
                                                                            th:value="*{lastname}"
-                                                                           id="lastname" name="lastname">
+                                                                           id="EditLastname" name="EditLastname">
                                                                 </label>
                                                                 <br>
                                                                 <label>Age
@@ -261,31 +261,31 @@
                                     <label>First name
                                         <input type="text"
                                                class="form-control form-control-sm"
-                                               id="name" name="name">
+                                               id="NewName" name="NewName">
                                     </label>
                                     <br>
                                     <label>Last name
                                         <input type="text"
                                                class="form-control form-control-sm"
-                                               id="lastname" name="lastname">
+                                               id="NewLastname" name="NewLastname">
                                     </label>
                                     <br>
                                     <label>Age
                                         <input type="number"
                                                class="form-control form-control-sm"
-                                               id="age" name="age">
+                                               id="NewAge" name="NewAge">
                                     </label>
                                     <br>
                                     <label>Email
-                                        <input type="email3"
+                                        <input type="email"
                                                class="form-control form-control-sm"
-                                               id="email3" name="email3">
+                                               id="NewEmail" name="NewEmail">
                                     </label>
                                     <br>
                                     <label>Password
                                         <input type="password"
                                                class="form-control form-control-sm"
-                                               id="password" name="password">
+                                               id="NewPassword" name="NewPassword">
                                     </label>
                                     <br>
                                     <label>Role
