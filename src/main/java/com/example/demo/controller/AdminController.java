@@ -42,7 +42,7 @@ public class AdminController {
 
     @PostMapping
     public String create(@ModelAttribute("user") User user,
-                         @RequestParam(value = "nameRoles") String[] nameRoles) {
+                         @RequestParam(value = "nameRoles") Integer[] nameRoles) {
         user.setRoles(roleService.getSetOfRoles(nameRoles));
         userService.create(user);
         return "redirect:/admin";
@@ -64,16 +64,17 @@ public class AdminController {
     @GetMapping("/{id}")
     public String editUser(Model model, @PathVariable("id") int id) {
         model.addAttribute("roles", roleService.getAllRoles());
-        model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("user", userService.getById(id));
         return "edit";
     }
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user,
-                             @RequestParam(value = "nameRoles") String[] nameRoles,
+                             @RequestParam(value = "nameRoles") Integer[] nameRoles,
                              @PathVariable(value = "id") int id) {
         user.setRoles(roleService.getSetOfRoles(nameRoles));
-        userService.updateUser(id, user);
+        userService.findById(user.getId());
+        userService.create(user);
         return "redirect:/admin";
     }
 }

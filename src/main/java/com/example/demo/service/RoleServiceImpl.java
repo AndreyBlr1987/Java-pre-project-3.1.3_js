@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.RoleDao;
+
+import com.example.demo.dao.RoleRepository;
 import com.example.demo.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,46 +10,40 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
 public class RoleServiceImpl implements RoleService {
 
-    private RoleDao roleDao;
+    private  RoleRepository roleRepository;
 
     @Autowired
-    public RoleServiceImpl(RoleDao roleDao) {
-        this.roleDao = roleDao;
+    public RoleServiceImpl(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
     }
 
     @Override
     public List<Role> getAllRoles() {
-        return roleDao.getAllRoles();
+        return roleRepository.findAll();
     }
 
     @Override
-
-    public Role getRoleByName(String name) {
-        return roleDao.getRoleByName(name);
+    public Role findByRole(String name) {
+        return roleRepository.findByRole(name);
     }
 
     @Override
-    public HashSet<Role> getSetOfRoles(String[] roleNames) {
-        return roleDao.getSetOfRoles(roleNames);
+    public HashSet<Role> getSetOfRoles(Integer[] roleNames) {
+        Set<Role> roleSet= new HashSet<>();
+        for(Integer role :roleNames){
+            roleSet.add(findById(role));
+        }
+        return (HashSet) roleSet;
     }
 
     @Override
-    public void add(Role role) {
-        roleDao.add(role);
-    }
-
-    @Override
-    public void edit(Role role) {
-        roleDao.edit(role);
-    }
-
-    @Override
-    public Role getById(int id) {
-        return roleDao.getById(id);
+    public Role findById(int id) {
+        return roleRepository.findById(id).get();
     }
 }

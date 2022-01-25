@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.UserDao;
+import com.example.demo.dao.UserRepository;
 import com.example.demo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,58 +13,51 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao;
+    private UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
-        this.userDao = userDao;
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public List<User> allUsers() {
-        return userDao.allUsers();
+        return userRepository.findAll();
     }
 
 
     @Override
     public void create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDao.create(user);
+        userRepository.save(user);
     }
 
     @Override
     public void delete(User user) {
-        userDao.delete(user);
+        userRepository.delete(user);
     }
 
     @Override
     public void edit(User user) {
-        userDao.edit(user);
+        userRepository.save(user);
     }
 
     @Override
     public User getById(int id) {
-        return userDao.getById(id);
+        return userRepository.findById(id).get();
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return userDao.getUserByEmail(email);
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
-    public User getUserById(int id) {
-        return userDao.getUserById(id);
+    public User findById(int id) {
+        return userRepository.findById(id).get();
     }
 
-
-    @Override
-    public void updateUser(int id, User updatedUser) {
-        if (updatedUser.getPassword() != "")
-            updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-        userDao.updateUser(id, updatedUser);
-    }
 }
 

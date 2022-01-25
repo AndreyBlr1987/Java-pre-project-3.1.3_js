@@ -1,23 +1,20 @@
 package com.example.demo.service;
 
 
-
 import com.example.demo.entity.Role;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 public interface RoleService {
 
     List<Role> getAllRoles();
 
-    Role getRoleByName(String name);
+    Role findByRole(String name);
 
-    HashSet<Role> getSetOfRoles(String[] roleNames);
+    HashSet<Role> getSetOfRoles(Integer[] roleNames);
 
-    void add(Role role);
+    Role findById(int id);
 
-    void edit(Role role);
-
-    Role getById(int id);
 }

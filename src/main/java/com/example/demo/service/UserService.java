@@ -14,11 +14,10 @@ public interface UserService {
 
     User getById(int id);
 
-    User getUserByEmail(String email);
+    User getByEmail(String email);
 
-    User getUserById(int id);
+    User findById(int id);
 
-    void updateUser(int id, User updatedUser);
 
     void edit(User user);
 }

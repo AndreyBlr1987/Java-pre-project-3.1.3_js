@@ -140,8 +140,8 @@
                                                                             size="2" name="nameRoles"
                                                                             multiple="multiple">
                                                                         <option th:each="role : ${roles}"
-                                                                                th:value="${role.role}"
-                                                                                th:text="${role.role}"
+                                                                                th:value="${role.getId()}"
+                                                                                th:text="${role.getRole()}"
                                                                                 th:selected="${role.role} == USER"></option>
                                                                     </select>
                                                                 </label>
@@ -227,7 +227,7 @@
                                                                             size="2" name="nameRoles"
                                                                             multiple="multiple" readonly>
                                                                         <option th:each="role : ${user.getRoles()}"
-                                                                                th:value="${role.getRole()}"
+                                                                                th:value="${role.getId()}"
                                                                                 th:text="${role.getRole()}"></option>
                                                                     </select>
                                                                 </label>
@@ -291,7 +291,7 @@
                                     <label>Role
                                         <select class="form-control form-control-sm"
                                                 size="2" name="nameRoles" multiple="multiple">
-                                            <option th:each="role : ${roles}" th:value="${role.role}"
+                                            <option th:each="role : ${roles}" th:value="${role.getId()}"
                                                     th:text="${role.role}" th:selected="${role.role} == USER"></option>
                                         </select>
                                     </label>
