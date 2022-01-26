@@ -57,14 +57,14 @@ public class AdminController {
 
     @GetMapping(value = "/delete/{id}")
     public String deleteUser(@PathVariable("id") int id) {
-        userService.delete(userService.getById(id));
+        userService.delete(userService.findById(id));
         return "redirect:/admin";
     }
 
     @GetMapping("/{id}")
     public String editUser(Model model, @PathVariable("id") int id) {
         model.addAttribute("roles", roleService.getAllRoles());
-        model.addAttribute("user", userService.getById(id));
+        model.addAttribute("user", userService.findById(id));
         return "edit";
     }
 
