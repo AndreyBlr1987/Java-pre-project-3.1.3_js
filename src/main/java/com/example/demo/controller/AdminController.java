@@ -67,11 +67,12 @@ public class AdminController {
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user,
-                             @RequestParam(value = "nameRoles") Integer[] nameRoles,
-                             @PathVariable(value = "id") int id) {
+                             @RequestParam(value = "nameRoles") Integer[] nameRoles
+//                             @PathVariable(value = "id") int id
+    ) {
         user.setRoles(roleService.getSetOfRoles(nameRoles));
         userService.findById(user.getId());
-        userService.create(user);
+        userService.edit(user);
         return "redirect:/admin";
     }
 }

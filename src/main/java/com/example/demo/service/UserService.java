@@ -16,6 +16,5 @@ public interface UserService {
 
     User findById(int id);
 
-
     void edit(User user);
 }
