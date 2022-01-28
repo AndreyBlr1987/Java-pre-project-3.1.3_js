@@ -30,7 +30,6 @@ public class AdminController {
     }
 
 
-
     @GetMapping()
     public String allUsers(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
@@ -70,7 +69,6 @@ public class AdminController {
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user,
                              @RequestParam(value = "nameRoles") Integer[] nameRoles
-//                             @PathVariable(value = "id") int id
     ) {
         user.setRoles(roleService.getSetOfRoles(nameRoles));
         userService.findById(user.getId());
