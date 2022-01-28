@@ -16,7 +16,7 @@ import java.util.Set;
 @Transactional
 public class RoleServiceImpl implements RoleService {
 
-    private  RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     public RoleServiceImpl(RoleRepository roleRepository) {
@@ -35,8 +35,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public HashSet<Role> getSetOfRoles(Integer[] roleNames) {
-        Set<Role> roleSet= new HashSet<>();
-        for(Integer role :roleNames){
+        Set<Role> roleSet = new HashSet<>();
+        for (Integer role : roleNames) {
             roleSet.add(findById(role));
         }
         return (HashSet) roleSet;

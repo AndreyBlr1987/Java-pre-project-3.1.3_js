@@ -48,14 +48,15 @@ public class User implements UserDetails {
 
 
     @ManyToMany(fetch = FetchType.EAGER
-//            , cascade = CascadeType.ALL
     )
-//    @JsonManagedReference
     @JoinTable(
             name = "users_roles"
             , joinColumns = @JoinColumn(name = "users_id")
             , inverseJoinColumns = @JoinColumn(name = "roles_id"))
-
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id"
+    )
     private Set<Role> roles = new HashSet<>();
 
     public User() {
