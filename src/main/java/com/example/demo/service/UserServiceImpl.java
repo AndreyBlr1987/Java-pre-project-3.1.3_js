@@ -34,6 +34,10 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    public void deleteByID(int id) {
+        userRepository.deleteById(id);
+    }
+
     @Override
     public void delete(User user) {
         userRepository.delete(user);
@@ -54,6 +58,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(int id) {
         return userRepository.findById(id).get();
+    }
+
+    @Override
+    public User updateUser(int id, User updatedUser) {
+        User user = findById(id);
+        user.setName(updatedUser.getName());
+        user.setLastname(updatedUser.getLastname());
+        user.setAge(updatedUser.getAge());
+        user.setEmail(updatedUser.getEmail());
+        if (updatedUser.getPassword() != "")
+            user.setPassword(updatedUser.getPassword());
+        user.setRoles(updatedUser.getRoles());
+        return user;
     }
 
 }

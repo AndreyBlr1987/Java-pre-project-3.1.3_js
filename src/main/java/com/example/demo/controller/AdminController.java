@@ -30,6 +30,7 @@ public class AdminController {
     }
 
 
+
     @GetMapping()
     public String allUsers(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
