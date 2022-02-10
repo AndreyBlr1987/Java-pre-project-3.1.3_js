@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 
-
 import com.example.demo.entity.User;
 import com.example.demo.service.RoleService;
 import com.example.demo.service.UserService;
@@ -44,7 +43,7 @@ public class AdminRestController {
     }
 
     @GetMapping("/oneUser")
-    public ResponseEntity<User> oneUser(@AuthenticationPrincipal User user, Model model){
+    public ResponseEntity<User> oneUser(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
         return ResponseEntity.ok(user);
     }
@@ -55,32 +54,15 @@ public class AdminRestController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Void>  create(@RequestBody User user ) {
+    public ResponseEntity<Void> create(@RequestBody User user) {
         userService.create(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
-
-//    @PutMapping("/users")
-//    public void updateUser(@RequestBody User user) {
-//        userService.edit(user);
-//    }
-//@PutMapping("/users")
-//public ResponseEntity<Void> editUser(@RequestBody UserDto userDto) {               // изменяет
-//    User user = modelMapper.map(userDto, User.class);
-//    user.setRoles(userDto.getRole().stream().map(roleService::findByRole).collect(Collectors.toSet()));
-//    userService.edit(user);
-//    return ResponseEntity.ok().build();
-//}
 
     @DeleteMapping("users/{id}")
     public void deleteUser(@PathVariable("id") int id) {
         userService.delete(userService.findById(id));
     }
-
-
 
     @PatchMapping("/users/{id}") // изменяет
     public User updateUser(@RequestBody User user, @PathVariable("id") int id) {

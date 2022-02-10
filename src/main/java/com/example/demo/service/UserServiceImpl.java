@@ -30,8 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void create(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        User newUser = user;
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(newUser);
     }
 
     public void deleteByID(int id) {
