@@ -387,10 +387,13 @@
                                     <label>Role
                                         <select id="newRole" class="form-control form-control-sm"
                                                 size="2" name="nameRoles" multiple="multiple">
-                                            <option th:each="role : ${roles}"
-                                                    th:value="${role.role}"
-                                                    th:text="${role.role}">
-                                            </option>
+                                            <option value="ADMIN">ADMIN </option>
+                                            <option value="USER">USER </option>
+
+<!--                                                  " th:each="role : ${roles}"-->
+<!--                                                    th:value="${role.role}"-->
+<!--                                                    th:text="${role.role}">-->
+<!--                                            </option>-->
                                         </select>
                                     </label>
                                 </div>

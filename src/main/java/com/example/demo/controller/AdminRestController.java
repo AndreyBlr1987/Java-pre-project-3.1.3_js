@@ -55,8 +55,9 @@ public class AdminRestController {
     }
 
     @PostMapping("/users")
-    public void create(@RequestBody User user) {
+    public ResponseEntity<Void>  create(@RequestBody User user ) {
         userService.create(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
