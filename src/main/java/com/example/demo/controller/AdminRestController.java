@@ -30,7 +30,6 @@ public class AdminRestController {
     private UserService userService;
     private final RoleService roleService;
 
-
     @Autowired
     public AdminRestController(UserService userService, RoleService roleService) {
         this.userService = userService;
@@ -38,14 +37,8 @@ public class AdminRestController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<List<User>> getUsers(@AuthenticationPrincipal User user, Model model) {
         return ResponseEntity.ok(userService.allUsers());
-    }
-
-    @GetMapping("/oneUser")
-    public ResponseEntity<User> oneUser(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("user", user);
-        return ResponseEntity.ok(user);
     }
 
     @GetMapping(value = "/users/{id}")
@@ -54,19 +47,21 @@ public class AdminRestController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Void> create(@RequestBody User user) {
+    public ResponseEntity<User> create(@RequestBody User user) {
         userService.create(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("users/{id}")
-    public void deleteUser(@PathVariable("id") int id) {
+    public ResponseEntity<User> deleteUser(@PathVariable("id") int id) {
         userService.delete(userService.findById(id));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("/users/{id}") // изменяет
-    public User updateUser(@RequestBody User user, @PathVariable("id") int id) {
-        return userService.updateUser(id, user);
+    @PatchMapping("/users/{id}")
+    public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable("id") int id) {
+        userService.updateUser(id, user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

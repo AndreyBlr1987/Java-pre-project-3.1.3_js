@@ -80,8 +80,8 @@ function editUserById(id) {
                 $('#editAge').val(user.age)
                 $('#editEmail').val(user.email)
                 user.roles.map(role => {
-                    $('#editRole').append('<option id="' + role.id + '" name="' + role.role + '">' +
-                        role.role + '</option>')
+                    $('#editRole').val('<option id="' + role.id + '" name="' + role.role + '"></option>')
+
                 })
             })
         })
@@ -135,7 +135,7 @@ function deleteUserById(id) {
                 $('#deleteAge').val(user.age)
                 $('#deleteEmail').val(user.email)
                 user.roles.map(role => {
-                    $('#deleteRole').append('<option id="' + role.id + '" name="' + role.role + '">' +
+                    $('#deleteRole').append('<option >' +
                         role.role + '</option>')
                 })
             })
@@ -161,14 +161,10 @@ function closeForm() {
 
 function addRoles(role) {
     let roles = [];
-    if (role === "USER" && role === "ADMIN") {
-        roles.push({id: 1, role: 'USER', authority: 'USER'},
-            {id: 2, role: 'ADMIN', authority: 'ADMIN'})
-        return roles
-    } else if (role === "USER") {
+    if (role === "USER") {
         roles.push({id: 1, role: 'USER', authority: 'USER'});
         return roles
-    } else if (role === "ADMIN") {
+    } else  {
         roles.push({id: 2, role: 'ADMIN', authority: 'ADMIN'});
         return roles
     }
