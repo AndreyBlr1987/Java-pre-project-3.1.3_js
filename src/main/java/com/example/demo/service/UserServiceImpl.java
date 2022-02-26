@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
@@ -27,23 +26,25 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-
     @Override
+    @Transactional
     public void create(User user) {
         User newUser = user;
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(newUser);
     }
-
+    @Transactional
     public void deleteByID(int id) {
         userRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public void delete(User user) {
         userRepository.delete(user);
     }
 
+    @Transactional
     @Override
     public void edit(User user) {
         if (user.getPassword() == "")
@@ -52,6 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+//    @Transactional
     public User getByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -62,6 +64,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User updateUser(int id, User updatedUser) {
         User user = findById(id);
         user.setName(updatedUser.getName());
