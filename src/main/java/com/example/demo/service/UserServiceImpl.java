@@ -2,12 +2,14 @@ package com.example.demo.service;
 
 import com.example.demo.dao.UserRepository;
 import com.example.demo.entity.User;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -33,6 +35,7 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(newUser);
     }
+
     @Transactional
     public void deleteByID(int id) {
         userRepository.deleteById(id);
@@ -53,20 +56,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-//    @Transactional
     public User getByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
+    @Transactional
     public User findById(int id) {
-        return userRepository.findById(id).get();
+        Optional<User> user = userRepository.findById(id);
+        User user1 = user.get();
+        Hibernate.initialize(user1.getRoles());
+        return user1;
     }
 
     @Override
     @Transactional
     public User updateUser(int id, User updatedUser) {
-        User user = findById(id);
+        Optional<User> user2 = userRepository.findById(id);
+        User user = user2.get();
         user.setName(updatedUser.getName());
         user.setLastname(updatedUser.getLastname());
         user.setAge(updatedUser.getAge());

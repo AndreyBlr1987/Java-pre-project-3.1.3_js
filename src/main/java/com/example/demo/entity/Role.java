@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,8 +28,10 @@ public class Role implements GrantedAuthority {
     @Column(name = "role")
     private String role;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(fetch = FetchType.LAZY ,mappedBy = "roles")
+    @JsonBackReference
     Set<User> users;
 
     public Role() {
