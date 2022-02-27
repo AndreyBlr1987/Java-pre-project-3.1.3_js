@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void deleteByID(int id) {
+    public void deleteByID(Integer id) {
         userRepository.deleteById(id);
     }
 
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User findById(int id) {
+    public User findById(Integer id) {
         Optional<User> user = userRepository.findById(id);
         User user1 = user.get();
         Hibernate.initialize(user1.getRoles());
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User updateUser(int id, User updatedUser) {
+    public User updateUser(Integer id, User updatedUser) {
         Optional<User> user2 = userRepository.findById(id);
         User user = user2.get();
         user.setName(updatedUser.getName());

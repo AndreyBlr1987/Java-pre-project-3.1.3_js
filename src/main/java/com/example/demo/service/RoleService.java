@@ -14,6 +14,6 @@ public interface RoleService {
 
     HashSet<Role> getSetOfRoles(Integer[] roleNames);
 
-    Role findById(int id);
+    Role findById(Integer id);
 
 }

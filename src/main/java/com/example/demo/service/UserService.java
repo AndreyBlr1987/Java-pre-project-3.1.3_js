@@ -14,11 +14,11 @@ public interface UserService {
 
     User getByEmail(String email);
 
-    User findById(int id);
+    User findById(Integer id);
 
     void edit(User user);
 
-    void deleteByID(int id);
+    void deleteByID(Integer id);
 
-    public User updateUser(int id, User updatedUser);
+    public User updateUser(Integer id, User updatedUser);
 }
