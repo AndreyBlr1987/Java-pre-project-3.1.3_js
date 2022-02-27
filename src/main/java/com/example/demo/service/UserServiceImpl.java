@@ -61,11 +61,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public User findById(Integer id) {
         Optional<User> user = userRepository.findById(id);
         User user1 = user.get();
-        Hibernate.initialize(user1.getRoles());
         return user1;
     }
 

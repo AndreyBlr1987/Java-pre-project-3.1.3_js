@@ -49,20 +49,16 @@ public class AdminRestController {
     @PostMapping("/users")
     public ResponseEntity<User> create(@RequestBody User user) {
         userService.create(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @DeleteMapping("users/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("id") int id) {
+    public void deleteUser(@PathVariable("id") int id) {
         userService.delete(userService.findById(id));
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("/users/{id}")
-    public ResponseEntity<Void> updateUser(@RequestBody User user, @PathVariable("id") int id) {
+    public void updateUser(@RequestBody User user, @PathVariable("id") int id) {
         userService.updateUser(id, user);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }
