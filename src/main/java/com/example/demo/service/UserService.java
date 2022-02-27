@@ -18,7 +18,5 @@ public interface UserService {
 
     void edit(User user);
 
-    void deleteByID(Integer id);
-
     public User updateUser(Integer id, User updatedUser);
 }

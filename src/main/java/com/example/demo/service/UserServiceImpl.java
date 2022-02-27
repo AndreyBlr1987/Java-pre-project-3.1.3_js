@@ -36,12 +36,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(newUser);
     }
 
-    @Transactional
-    public void deleteByID(Integer id) {
-        userRepository.deleteById(id);
-    }
-
-    @Transactional
     @Override
     public void delete(User user) {
         userRepository.delete(user);
